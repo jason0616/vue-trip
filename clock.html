@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Document</title>
+</head>
+
+<body>
+<div id="app"></div>
+</body>
+<script src="lib/react.development.js"></script>
+<script src="lib/react-dom.development.js"></script>
+<script src="lib/babel.min.js"></script>
+
+<script type='text/babel'>
+ function Time(props){
+        
+        return <div>{props.data}</div>
+ }
+ class Set extends React.Component{
+    formatDate(d){
+                let year = d.getFullYear();
+                let month = d.getMonth()+1;
+                let date = d.getDate();
+
+                let hour = d.getHours();
+                let min = d.getMinutes();
+                let sec = d.getSeconds();
+
+                hour = String(hour).padStart(2,'0');
+                min = String(min).padStart(2,'0');
+                sec = String(sec).padStart(2,'0');
+
+                return `${year}-${month}-${date} ${hour}:${min}:${sec}`
+            }
+    constructor(){
+        super()
+        this.state={
+            time:this.formatDate(new Date())
+        }
+        setInterval(() => {
+                    this.setState({
+                        time:this.formatDate(new Date())
+                    })
+                }, 1000);
+    }
+  
+    render(){
+        return <Time data={this.state.time}/>
+  
+    }
+         
+   }
+ReactDOM.render(
+<Set/>
+,
+document.getElementById('app')
+)
+</script>
+</html>
